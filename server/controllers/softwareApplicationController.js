@@ -14,14 +14,14 @@ const getAllSoftwareApplication = async (req, res) => {
 const addSoftwareApplication = async (req, res) => {
   try {
     if (!req.files || Object.keys(req.files).length === 0) {
-      return res.send(error(400, "Software Application icon is required"));
+      return res.status(400).send(error(400, "Software Application icon is required"));
     }
 
     const { icon } = req.files;
     const { name } = req.body;
 
     if (!name) {
-      return res.json(error(400, "Software Application name is required "));
+      return res.status(400).json(error(400, "Software Application name is required "));
     }
 
     const cloudinaryIconResult = await new Promise((resolve, reject) => {
@@ -45,9 +45,9 @@ const addSoftwareApplication = async (req, res) => {
         url: cloudinaryIconResult?.url,
       },
     });
-    return res.json(success(200, softwareApplication));
+    return res.status(200).json(success(200, softwareApplication));
   } catch (e) {
-    return res.json(error(500, e.message));
+    return res.status(200).json(error(500, e.message));
   }
 };
 

@@ -14,14 +14,14 @@ const getAllSkill = async (req, res) => {
 const addSkill = async (req, res) => {
   try {
     if (!req.files || Object.keys(req.files).length === 0) {
-      return res.send(error(400, "Skill icon is required"));
+      return res.status(400).send(error(400, "Skill icon is required"));
     }
 
     const { icon } = req.files;
     const { title, proficiency } = req.body;
 
     if (!title || !proficiency) {
-      return res.json(error(400, "Title and Proficiency are required "));
+      return res.status(400).json(error(400, "Title and Proficiency are required "));
     }
 
     const cloudinaryIconResult = await new Promise((resolve, reject) => {
@@ -46,9 +46,9 @@ const addSkill = async (req, res) => {
         url: cloudinaryIconResult?.url,
       },
     });
-    return res.json(success(200, skills));
+    return res.status(200).json(success(200, skills));
   } catch (e) {
-    return res.json(error(500, e.message));
+    return res.status(500).json(error(500, e.message));
   }
 };
 const updateSkill = async (req, res) => {
@@ -76,22 +76,22 @@ const deleteSkill = async (req, res) => {
   try {
     const { skillId } = req.params;
     if (!skillId) {
-      return res.json(error(404, "Skill id is required"));
+      return res.status(404).json(error(404, "Skill id is required"));
     }
 
     const skill = await Skills.findById(skillId);
 
     if (!skill) {
-      return res.json(error(404, "Skill with associated id not found"));
+      return res.status(404).json(error(404, "Skill with associated id not found"));
     }
 
     const skillIcon = skill?.icon?.public_id;
     await cloudinary.uploader.destroy(skillIcon);
     await skill.deleteOne();
 
-    return res.json(success(200, "Skill deleted successfully"));
+    return res.status(200).json(success(200, "Skill deleted successfully"));
   } catch (e) {
-    return res.json(error(500, e.message));
+    return res.status(500).json(error(500, e.message));
   }
 };
 

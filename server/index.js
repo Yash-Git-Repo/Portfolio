@@ -30,12 +30,12 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(morgan('common'))
 app.use(cookieParser())
-app.use(cors([{
+app.use(cors({
     credentials: true,
-    origin: process.env.DASHBOARD_URL,
-    methods:['GET' , 'POST' , 'PUT' , 'DELETE']
-}]
-))
+    origin:[process.env.DASHBOARD_URL,process.env.PORTFOLIO_URL],
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+}));
+
 app.use(fileUpload({
     useTempFiles:true,
     tempFileDir:'/tmp/'

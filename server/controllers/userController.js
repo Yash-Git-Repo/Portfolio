@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const { error, success } = require("../utils/responseWrapper");
 const cloudinary = require("../cloudinaryConfig");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 
 const getUser = async (req, res) => {
   try {
@@ -84,11 +84,11 @@ const updateUser = async (req, res) => {
       new: true,
     });
 
-    return res.json(success(200, updatedUser));
+    return res.status(200).json(success(200, updatedUser));
   } catch (e) {
     console.log(e);
 
-    return res.json(error(500, e.message));
+    return res.status(500).json(error(500, e.message));
   }
 };
 
@@ -97,7 +97,7 @@ const updatePassword = async (req, res) => {
     const userId = req._id;
     const { currentPassword, newPassword, confirmNewPassword } = req.body;
     if (!currentPassword || !newPassword || !confirmNewPassword) {
-      return res.json(error(400, "All fields are required"));
+      return res.status(400).json(error(400, "All fields are required"));
     }
     const user = await User.findById(userId);
     const passwordMatched = await bcrypt.compare(
@@ -105,35 +105,37 @@ const updatePassword = async (req, res) => {
       user.password
     );
     if (!passwordMatched) {
-      return res.send(error(403, "Password is incorrect"));
+      return res.status(403).send(error(403, "Password is incorrect"));
     }
     if (newPassword !== confirmNewPassword) {
-      return res.json(error(400, "Password did not match"));
+      return res.status(400).json(error(400, "Password did not match"));
     }
     user.password = await bcrypt.hash(newPassword, 10);
     await user.save();
-    return res.json(success(200, "Password is successfully changed"));
+    return res
+      .status(200)
+      .json(success(200, "Password is successfully changed"));
   } catch (e) {
-    return res.json(error(e.message));
+    return res.status(200).json(error(e.message));
   }
 };
 
 const getUserForPortfolio = async (req, res) => {
-    try {
-      const userId = '66d86de058d686e824c20c30';
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.json(error(404, "No user found !"));
-      }
-      return res.json(success(200, user));
-    } catch (e) {
-      return res.json(error(500, e.message));
+  try {
+    const userId = "66e413d7a8669123d310c2e4";
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json(error(404, "No user found !"));
     }
-  };
+    return res.status(200).json(success(200, user));
+  } catch (e) {
+    return res.status(500).json(error(500, e.message));
+  }
+};
 
 module.exports = {
   getUser,
   updateUser,
   updatePassword,
-  getUserForPortfolio
+  getUserForPortfolio,
 };

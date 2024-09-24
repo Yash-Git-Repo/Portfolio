@@ -7,6 +7,8 @@ router.post("/login", authController.loginController);
 router.get("/logout", requireUser, authController.logoutController);
 router.post("/forgotPassword", authController.forgotPassword);
 router.post("/resetPassword/:token", authController.resetPassword);
+router.get('/refresh',authController.refreshAccessTokencontroller)
+
 
 
 module.exports = router;

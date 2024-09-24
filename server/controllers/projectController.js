@@ -30,30 +30,31 @@ const getSingleProjects = async (req, res) => {
 const addProject = async (req, res) => {
   try {
     if (!req.files || Object.keys(req.files).length === 0) {
-      return res.send(error(400, "Project banner image is required"));
+      return res
+        .status(400)
+        .send(error(400, "Project banner image is required"));
     }
 
     const { projectBanner } = req.files;
     const {
       title,
-      descritption,
+      description,
       gitRepoLink,
       projectLink,
       technologies,
       stack,
       deployed,
     } = req.body;
+    console.log("req", technologies);
 
     if (
       !title ||
-      !descritption ||
-      !gitRepoLink ||
-      !projectLink ||
+      !description ||
       !technologies ||
       !stack ||
       !deployed
     ) {
-      return res.json(error(400, "All fields are required "));
+      return res.status(400).json(error(400, "All fields are required "));
     }
 
     const cloudinaryProjectBannerResult = await new Promise(
@@ -74,7 +75,7 @@ const addProject = async (req, res) => {
 
     const project = await Projects.create({
       title,
-      descritption,
+      description,
       gitRepoLink,
       projectLink,
       technologies,
@@ -85,24 +86,31 @@ const addProject = async (req, res) => {
         url: cloudinaryProjectBannerResult?.url,
       },
     });
-    return res.json(success(200, project));
+    console.log("project", project);
+
+    return res.status(200).json(success(200, project));
   } catch (e) {
-    return res.json(error(500, e.message));
+    console.log(e);
+
+    return res.status(500).json(error(500, e.message));
   }
 };
 
 const updateProject = async (req, res) => {
   try {
     const { projectId } = req.params;
+    console.log("projectId", projectId);
+
     const newProjectData = {
       title: req.body.title,
-      descritption: req.body.descritption,
+      description: req.body.description,
       gitRepoLink: req.body.gitRepoLink,
       projectLink: req.body.projectLink,
       technologies: req.body.technologies,
       stack: req.body.stack,
       deployed: req.body.deployed,
     };
+    console.log("newProjectData", newProjectData);
 
     const project = await Projects.findById(projectId);
 
@@ -139,9 +147,11 @@ const updateProject = async (req, res) => {
       }
     );
 
-    return res.json(success(200, updatedProject));
+    return res.status(200).json(success(200, updatedProject));
   } catch (e) {
-    return res.json(error(500, e.message));
+    console.log(e);
+
+    return res.status(500).json(error(500, e.message));
   }
 };
 
@@ -149,17 +159,17 @@ const deleteProject = async (req, res) => {
   try {
     const { projectId } = req.params;
     if (!projectId) {
-      return res.json(error(400, "Project Id is required"));
+      return resstatus(400).json(error(400, "Project Id is required"));
     }
     const project = await Projects.findById(projectId);
     if (!project) {
-      return res.json(error(400, "Project with associated Id not found"));
+      return res.status(400).json(error(400, "Project with associated Id not found"));
     }
 
     await project.deleteOne();
-    return res.json(success(200, "Project deleted successfully"));
+    return res.status(200).json(success(200, "Project deleted successfully"));
   } catch (e) {
-    return res.json(error(500, e.message));
+    return res.status(500).json(error(500, e.message));
   }
 };
 

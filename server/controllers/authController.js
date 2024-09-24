@@ -9,7 +9,7 @@ const nodemailer = require("nodemailer");
 const signUpController = async (req, res) => {
   try {
     if (!req.files || Object.keys(req.files).length === 0) {
-      return res.send(error(400, "Avatar and resume are required"));
+      return res.json(error(400, "Avatar and resume are required"));
     }
 
     const { avatar, resume } = req.files;
@@ -64,12 +64,12 @@ const signUpController = async (req, res) => {
       !aboutMe ||
       !portfolioUrl
     ) {
-      return res.send(error(400, "All Fields are required"));
+      return res.json(error(400, "All Fields are required"));
     }
 
     const oldUser = await User.findOne({ email });
     if (oldUser) {
-      return res.send(error(409, "User is already registered"));
+      return res.json(error(409, "User is already registered"));
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -96,10 +96,10 @@ const signUpController = async (req, res) => {
       },
     });
 
-    return res.send(success(201, "User created successfully"));
+    return res.json(success(201, "User created successfully"));
   } catch (e) {
     console.log(e);
-    res.send(error(500, e.message));
+    res.json(error(500, e.message));
   }
 };
 
@@ -108,16 +108,17 @@ const loginController = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.send(error(400, "All fields are required"));
+      return res.status(400).json(error(400, "All fields are required"));
     }
+
     const user = await User.findOne({ email });
     if (!user) {
-      return res.send(error(404, "User is not registered"));
+      return res.status(404).json(error(404, "User is not registered"));
     }
 
     const passwordMatched = await bcrypt.compare(password, user.password);
     if (!passwordMatched) {
-      return res.send(error(403, "Password is incorrect"));
+      return res.status(403).json(error(403, "Password is incorrect"));
     }
 
     const accessToken = generateAccessToken({ _id: user._id });
@@ -128,12 +129,13 @@ const loginController = async (req, res) => {
       secure: true,
     });
 
-    return res.send(success(200, { user, accessToken }));
+    return res.json(success(200,{user , accessToken}));
   } catch (e) {
-    res.send(error(500, e.message));
-    console.log(e);
+    console.log(e); // Log error for debugging
+    return res.status(500).json(error(500, e.message));
   }
 };
+
 
 const logoutController = async (req, res) => {
   try {
@@ -141,9 +143,9 @@ const logoutController = async (req, res) => {
       httpOnly: true,
       secure: true,
     });
-    return res.send(success(200, "User logged out"));
+    return res.json(success(200, "User logged out"));
   } catch (e) {
-    res.send(error(500, e.message));
+    res.json(error(500, e.message));
   }
 };
 
@@ -160,13 +162,34 @@ const generateRefreshToken = (data) => {
   return token;
 };
 
+//This api will check the access token validity and generate a new access token
+const refreshAccessTokencontroller = async (req, res) => {
+  const cookies = req.cookies;
+
+  if (!cookies || !cookies.jwt) {
+      return res.send(error(401, "Refresh Token is required"));
+  }
+
+  const refreshToken = cookies.jwt;
+  try {
+      const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_PRIVATE_KEY);
+      const _id = decoded._id;
+      const accessToken = generateAccessToken({ _id });
+
+      return res.send(success(201, { accessToken })
+      );
+  } catch (err) {
+      return res.send(error(401, "Invalid refresh key"));
+  }
+};
+
 const forgotPassword = async (req, res) => {
   let user;
   try {
     const { email } = req.body;
     user = await User.findOne({ email });
     if (!user) {
-      return res.json(error(404, "User not found"));
+      return res.status(404).json(error(404, "User not found"));
     }
     const resetToken = crypto.randomBytes(20).toString("hex");
     user.resetPasswordToken = resetToken;
@@ -181,7 +204,7 @@ const forgotPassword = async (req, res) => {
       },
     });
 
-    const resetUrl = `${process.env.DASHBOARD_URL}//password/reset/${resetToken}`;
+    const resetUrl = `${process.env.DASHBOARD_URL}/password/reset/${resetToken}`;
 
     await transporter.sendMail({
       to: user.email,
@@ -194,7 +217,7 @@ const forgotPassword = async (req, res) => {
         `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
     });
 
-    return res.json(success(200, "Password reset email sent successfully"));
+    return res.status(200).json(success(200, "Password reset email sent successfully"));
   } catch (e) {
     console.log(e);
     if (user) {
@@ -202,21 +225,21 @@ const forgotPassword = async (req, res) => {
       user.resetPasswordExpire = undefined;
       await user.save(); // Clean up changes
     }
-    return res.json(error(500, e.message));
+    return res.status(500).json(error(500, e.message));
   }
 };
 
 const resetPassword = async (req, res) => {
   try {
-    const { token } = req.params; 
+    const { token } = req.params;
     const { newPassword, confirmNewPassword } = req.body;
 
     if (!newPassword || !confirmNewPassword) {
-      return res.json(error(400, "All fields are required"));
+      return res.status(400).json(error(400, "All fields are required"));
     }
 
     if (newPassword !== confirmNewPassword) {
-      return res.json(error(400, "Passwords do not match"));
+      return res.status(400).json(error(400, "Passwords do not match"));
     }
 
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
@@ -228,7 +251,7 @@ const resetPassword = async (req, res) => {
     });
 
     if (!user) {
-      return res.json(error(400, "Invalid or expired token"));
+      return res.status(400).json(error(400, "Invalid or expired token"));
     }
     user.password = await bcrypt.hash(newPassword, 10);
     user.resetPasswordToken = undefined;
@@ -236,9 +259,9 @@ const resetPassword = async (req, res) => {
 
     await user.save();
 
-    return res.json(success(200, "Password has been reset successfully"));
+    return res.status(200).json(success(200, "Password has been reset successfully"));
   } catch (e) {
-    return res.json(error(500, e.message));
+    return res.status(500).json(error(500, e.message));
   }
 };
 
@@ -248,4 +271,5 @@ module.exports = {
   logoutController,
   forgotPassword,
   resetPassword,
+  refreshAccessTokencontroller
 };

@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 const projectsSchema = new mongoose.Schema({
   title: String,
-  descritption: String,
+  description: String,
   gitRepoLink: String,
   projectLink: String,
-  tchnologies: String,
+  technologies: String,
   stack: String,
   deployed: String,
   projectBanner: {
