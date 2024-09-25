@@ -36,7 +36,7 @@ const About = () => {
         </div>
 
         {/* Text Content Section */}
-        <div className="flex flex-col justify-center gap-5 text-lg sm:text-xl leading-relaxed tracking-wide text-gray-200">
+        <div className="flex flex-col justify-center gap-5 text-lg sm:text-xl leading-relaxed tracking-wide">
           <p>
             Hello! I'm Yash Shivhare, a passionate and dedicated software
             engineer with a strong foundation in full-stack development. I hold
@@ -66,7 +66,7 @@ const About = () => {
       </div>
 
       {/* Closing Statement */}
-      <p className="text-lg sm:text-xl tracking-wide text-gray-300 text-center">
+      <p className="text-lg sm:text-xl tracking-wide text-center">
         Thank you for visiting my website! Feel free to reach out if you'd like
         to connect or discuss potential opportunities.
       </p>
