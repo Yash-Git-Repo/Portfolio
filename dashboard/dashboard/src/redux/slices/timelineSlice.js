@@ -36,7 +36,6 @@ export const deleteTimeline = createAsyncThunk(
       const response = await axiosClient.delete(
         `timeline/deleteTimeline/${timelineId}`
       );
-      console.log(response?.data?.result);
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message

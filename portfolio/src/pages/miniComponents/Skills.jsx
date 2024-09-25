@@ -8,18 +8,17 @@ const Skills = () => {
   useEffect(() => {
     const getMySkills = async () => {
       const response = await axiosClient.get("skills/getAllSkills");
-      console.log("dss", response);
       setSkills(response?.data?.result);
     };
     getMySkills();
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center gap-8 sm:gap-12 px-4 py-10" style={{"margin-left":"300px"}}>
+    <div className="w-full flex flex-col items-center gap-8 sm:gap-12 px-4 py-10" >
       {/* Centered Title */}
       <h1
         className="text-tubeLight-effect text-[2rem] sm:text-[2.75rem] md:text-[3rem] 
-        lg:text-[3.8rem] tracking-[15px] dancing_text text-center"
+        lg:text-[3.8rem] tracking-[15px] dancing_text text-center" style={{"margin-left":"600px"}}
       >
         SKILLS
       </h1>

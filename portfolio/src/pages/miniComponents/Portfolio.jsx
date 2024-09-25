@@ -47,7 +47,7 @@ const Portfolio = () => {
       </div>
 
       {/* Centered Portfolio Grid */}
-      <div className="w-full max-w-6xl" style={{"margin-left":"300px"}}>
+      <div className="w-full max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 justify-items-center">
           {viewAll
             ? projects &&

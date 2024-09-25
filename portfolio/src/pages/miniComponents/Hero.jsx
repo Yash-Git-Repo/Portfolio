@@ -28,11 +28,9 @@ const Hero = () => {
         <span className="bg-green-400 rounded-full h-2 w-2"></span>
         <p>Online</p>
       </div>
-      <h1
-  className="text-[1.3rem] sm:text-[1.75rem] md:text-[2.2rem] lg:text-[2.8rem] tracking-[2px] mb-4 overflow-hidden text-ellipsis whitespace-nowrap"
->
-  Hey, I'm Yash
-</h1>
+      <h1 className="text-[1.3rem] sm:text-[1.75rem] md:text-[2.2rem] lg:text-[2.8rem] tracking-[2px] mb-4 overflow-hidden text-ellipsis whitespace-nowrap">
+        Hey, I'm Yash
+      </h1>
 
       <h1
         className="text-tubeLight-effect overflow-x-hidden text-[1.3rem] 
@@ -47,16 +45,20 @@ const Hero = () => {
           delaySpeed={1000}
         />
       </h1>
-      <div
-        className="w-fit px-5 py-2 bg-slate-50 rounded-[20px] flex gap-5 
-      items-center mt-4 md:mt-8 lg:mt-10"
-      >
-        <Link to={user.linkedInURL} target="_blank">
-          <Linkedin className="text-sky-500 w-7 h-7" />
-        </Link>
+      <div className="flex gap-2">
+        <div className="w-fit px-5 py-2 bg-slate-50 rounded-[15px] flex items-center mt-4 md:mt-8 lg:mt-10">
+          <Link to={user?.linkedInUrl} target="_blank">
+            <Linkedin className="text-sky-500 w-7 h-7" />
+          </Link>
+        </div>
+        <div className="w-fit px-5 py-2 bg-slate-50 rounded-[15px] flex items-center  mt-4 md:mt-8 lg:mt-10">
+          <Link to={user?.githubUrl} target="_blank">
+            <Github className="text-sky-500 w-7 h-7" />
+          </Link>
+        </div>
       </div>
       <div className="mt-4 md:mt-8 lg:mt-10  flex gap-3">
-        <Link to={user.githubURL} target="_blank">
+        <Link to={user?.githubUrl} target="_blank">
           <Button className="rounded-[30px] flex items-center gap-2 flex-row">
             <span>
               <Github />
@@ -64,7 +66,7 @@ const Hero = () => {
             <span>Github</span>
           </Button>
         </Link>
-        <Link to={user.resume && user.resume.url} target="_blank">
+        <Link to={user?.resume && user?.resume?.url} target="_blank">
           <Button className="rounded-[30px] flex items-center gap-2 flex-row">
             <span>
               <ExternalLink />

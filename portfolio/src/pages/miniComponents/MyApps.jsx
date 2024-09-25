@@ -15,9 +15,9 @@ const MyApps = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center w-full px-4" style={{"margin-left":"300px"}}>
+    <div className="flex flex-col items-center w-full px-4" >
       {/* Centered Title */}
-      <h1 className="text-tubeLight-effect text-[2rem] sm:text-[2.75rem] md:text-[3rem] lg:text-[3.8rem] tracking-[15px] dancing_text text-center mb-8">
+      <h1 className="text-tubeLight-effect text-[2rem] sm:text-[2.75rem] md:text-[3rem] lg:text-[3.8rem] tracking-[15px] dancing_text text-center mb-8" style={{"margin-left":"600px"}}>
         MY APPS
       </h1>
 

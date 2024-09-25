@@ -7,7 +7,6 @@ const Timeline = () => {
   useEffect(() => {
     const getMyTimeline = async () => {
       const response = await axiosClient.get("timeline/getAllTimeline");
-      console.log("data", response?.data?.result);
       setTimeline(response?.data?.result);
     };
     getMyTimeline();

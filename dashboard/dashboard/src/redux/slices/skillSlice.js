@@ -33,8 +33,6 @@ export const updateSkill = createAsyncThunk(
   "skills/updateSkill",
   async ({skillId , newProficiency}, thunkAPI) => {
     try {
-      console.log("skillll", skillId);
-
       const response = await axiosClient.put(`/skills/updateSkill/${skillId}` , {proficiency : newProficiency});
       return response?.data?.result;
     } catch (error) {
