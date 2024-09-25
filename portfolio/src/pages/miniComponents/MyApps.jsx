@@ -15,9 +15,16 @@ const MyApps = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center w-full px-4" >
+    <div className="flex flex-col items-center w-full px-4">
       {/* Centered Title */}
+      {/* Stylish title
       <h1 className="text-tubeLight-effect text-[2rem] sm:text-[2.75rem] md:text-[3rem] lg:text-[3.8rem] tracking-[15px] dancing_text text-center mb-8" style={{"margin-left":"600px"}}>
+        MY APPS
+      </h1> */}
+      <h1
+        className="text-tubeLight-effect text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-8 dancing_text text-center mb-8"
+        style={{ "margin-left": "600px" }}
+      >
         MY APPS
       </h1>
 
@@ -26,7 +33,10 @@ const MyApps = () => {
         {apps &&
           apps.map((element) => {
             return (
-              <Card className="h-fit p-7 flex flex-col justify-center items-center gap-3" key={element._id}>
+              <Card
+                className="h-fit p-7 flex flex-col justify-center items-center gap-3"
+                key={element._id}
+              >
                 <img
                   src={element.icon && element.icon.url}
                   alt="app-icon"

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 const Skills = () => {
   const [skills, setSkills] = useState([]);
-  
+
   useEffect(() => {
     const getMySkills = async () => {
       const response = await axiosClient.get("skills/getAllSkills");
@@ -14,11 +14,18 @@ const Skills = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center gap-8 sm:gap-12 px-4 py-10" >
+    <div className="w-full flex flex-col items-center gap-8 sm:gap-12 px-4 py-10">
       {/* Centered Title */}
+      {/* Stylish title
       <h1
         className="text-tubeLight-effect text-[2rem] sm:text-[2.75rem] md:text-[3rem] 
         lg:text-[3.8rem] tracking-[15px] dancing_text text-center" style={{"margin-left":"600px"}}
+      >
+        SKILLS
+      </h1> */}
+      <h1
+        className="text-tubeLight-effect  text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-8 tracking-wider"
+        style={{ marginLeft: "700px" }}
       >
         SKILLS
       </h1>

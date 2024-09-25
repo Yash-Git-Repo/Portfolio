@@ -8,10 +8,9 @@ const Portfolio = () => {
   const [projects, setProjects] = useState([]);
   useEffect(() => {
     const getMyProjects = async () => {
-      const response = await axiosClient.get(
-        "projects/getAllProjects",
-        { withCredentials: true }
-      );
+      const response = await axiosClient.get("projects/getAllProjects", {
+        withCredentials: true,
+      });
       setProjects(response?.data?.result);
     };
     getMyProjects();
@@ -21,6 +20,7 @@ const Portfolio = () => {
     <div className="flex flex-col items-center">
       {/* Centered Title */}
       <div className="relative mb-12 text-center">
+        {/* Stylish title
         <h1
           className="hidden sm:flex gap-4 items-center text-[2rem] sm:text-[2.75rem] md:text-[3rem] 
           lg:text-[3.8rem] leading-[56px] md:leading-[67px] lg:leading-[90px] tracking-[15px] 
@@ -31,6 +31,12 @@ const Portfolio = () => {
         >
           MY{" "}
           <span className="text-tubeLight-effect font-extrabold">
+            PORTFOLIO
+          </span>
+        </h1> */}
+        <h1 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-8 flex justify-center items-center flex-row">
+          <span>MY</span>
+          <span className="text-tubeLight-effect font-extrabold tracking-wider mx-6">
             PORTFOLIO
           </span>
         </h1>

@@ -31,6 +31,7 @@ const Contact = () => {
   return (
     <>
       <div className="overflow-x-hidden">
+        {/* stylish title
         <div className="relative mb-8">
           <h1
             className="flex gap-4 items-center text-[1.85rem] sm:text-[2.75rem] md:text-[3rem] 
@@ -42,6 +43,14 @@ const Contact = () => {
           >
             CONTACT
             <span className="text-tubeLight-effect font-extrabold">ME</span>
+          </h1>
+        </div> */}
+        <div className="relative text-center mb-8">
+          <h1 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-8 flex justify-center items-center flex-row">
+            <span>CONTACT</span>
+            <span className="text-tubeLight-effect font-extrabold mx-6">
+              ME
+            </span>
           </h1>
         </div>
         <form onSubmit={handleMessage} className="flex flex-col gap-6">

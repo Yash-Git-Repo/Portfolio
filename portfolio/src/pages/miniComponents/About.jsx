@@ -4,6 +4,7 @@ const About = () => {
   return (
     <div className="w-full flex flex-col items-center px-4 md:px-8 lg:px-16 overflow-x-hidden">
       {/* Heading Section */}
+      {/* Stylish Heading
       <div className="relative text-center mb-8">
         <h1
           className="flex gap-4 items-center text-[2rem] sm:text-[2.75rem] 
@@ -14,6 +15,12 @@ const About = () => {
           }}
         >
           ABOUT <span className="text-tubeLight-effect font-extrabold">ME</span>
+        </h1>
+      </div> */}
+      <div className="relative text-center mb-8">
+        <h1 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-8 flex justify-center items-center flex-row">
+          <span>ABOUT</span>
+          <span className="text-tubeLight-effect font-extrabold ml-2">ME</span>
         </h1>
       </div>
 
