@@ -7,7 +7,7 @@ import {
 } from "./localStorageManager";
 
 export const axiosClient = axios.create({
-  baseURL: "http://localhost:4000/api",
+  baseURL: "https://portfolio-backend-d9k6.onrender.com/api",
   withCredentials: true,
 });
 
