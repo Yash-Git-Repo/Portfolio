@@ -30,7 +30,7 @@ axiosClient.interceptors.response.use(async (response) => {
   //when refresh token is expired we had to log out the user
   if (
     statusCode === 401 &&
-    originalRequest.url === `http://localhost:4000/api/auth/refresh`
+    originalRequest.url === `https://portfolio-backend-d9k6.onrender.com/api/auth/refresh`
   ) {
     removeItem(KEY_ACCESS_TOKEN);
     window.location.replace("/login", "_self");
