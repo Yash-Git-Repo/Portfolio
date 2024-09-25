@@ -32,7 +32,10 @@ app.use(morgan('common'))
 app.use(cookieParser())
 app.use(cors({
     credentials: true,
-    origin:[process.env.DASHBOARD_URL,process.env.PORTFOLIO_URL],
+    origin: [
+        'https://yash-shivhare.netlify.app',
+        'https://yash-portfolio-dashboard.netlify.app'  
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
