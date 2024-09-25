@@ -44,7 +44,6 @@ const userSchema = new mongoose.Schema({
   },
   portfolioUrl: {
     type: String,
-    required: [true, "Portfolio Url is required"],
   },
   githubUrl: String,
   instagramUrl: String,
