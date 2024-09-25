@@ -127,6 +127,7 @@ const loginController = async (req, res) => {
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
       secure: true,
+      sameSite:"None"
     });
 
     return res.json(success(200,{user , accessToken}));
@@ -142,6 +143,7 @@ const logoutController = async (req, res) => {
     res.clearCookie("jwt", {
       httpOnly: true,
       secure: true,
+      sameSite:"None"
     });
     return res.json(success(200, "User logged out"));
   } catch (e) {
