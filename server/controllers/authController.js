@@ -207,6 +207,8 @@ const forgotPassword = async (req, res) => {
     });
 
     const resetUrl = `${process.env.DASHBOARD_URL}/password/reset/${resetToken}`;
+    console.log('dkcbdkhbkhvkabd',resetUrl);
+    
 
     await transporter.sendMail({
       to: user.email,
