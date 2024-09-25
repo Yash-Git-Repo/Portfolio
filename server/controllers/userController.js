@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const { error, success } = require("../utils/responseWrapper");
 const cloudinary = require("../cloudinaryConfig");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const getUser = async (req, res) => {
   try {
